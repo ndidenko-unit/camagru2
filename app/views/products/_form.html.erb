@@ -4,6 +4,7 @@
   <input type=button value="Take Snapshot" onClick="take_snapshot()">
 
   <div class="field">
+    <%= hidden_field_tag 'user_id', current_user.id %>
     <%= f.hidden_field :image %>
     <%= f.label :image %>: <br />
     <div id="results">Your captured image will appear here...</div>

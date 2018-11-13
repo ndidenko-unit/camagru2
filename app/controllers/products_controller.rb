@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user! # для Devise
 
   # GET /products
   def index
@@ -53,6 +54,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:name, :image)
+      params.require(:product).permit(:name, :image).merge(user_id: current_user.id)
     end
 end
