@@ -2,7 +2,10 @@
   <div id="my_camera"></div>
 
   <input type=button value="Take Snapshot" onClick="take_snapshot()">
-
+  <div class="field">
+    <%= f.label 'Загрузить файл:' %><br>
+    <%= f.file_field :file %>
+  </div>
   <div class="field">
     <%= hidden_field_tag 'user_id', current_user.id %>
     <%= f.hidden_field :image %>

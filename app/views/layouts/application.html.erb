@@ -9,15 +9,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-<% if user_signed_in? %>
-    <span>Здравствуйте, <%= current_user.email %></span>
-    <%= link_to 'Выйти', destroy_user_session_path, :method => :delete %>
-<% else %>
-    <%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
-<% end %>
+<div class="col-md-12 alert alert-info">
+  <div class="col-md-9">
+    <h1><%= link_to 'Camagru', root_path %></h1>
+  </div>
+  <div class="col-md-3">
+    <% if user_signed_in? %>
+      <p>Здравствуйте, <%= current_user.email %></p>
+      <p><%= link_to 'Сменить пароль', edit_user_registration_path %></p>
+      <p><%= link_to 'Выйти', destroy_user_session_path, :method => :delete %></p>
+    <% else %>
+      <p><%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %></p>
+    <% end %>
+  </div>
+</div>
+<div class="alert alert-warning">
+  <p><%= notice %><%= alert %></p>
+</div>
+<div class="col-md-4"></div>
+<div class="col-md-4">
   <%= yield %>
-
+</div>
+<div class="col-md-4"></div>
 </body>
 </html>

@@ -54,6 +54,7 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
+      params[:product][:image] = params[:product][:file] if params[:product][:file].present?
       params.require(:product).permit(:name, :image).merge(user_id: current_user.id)
     end
 end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails'
 gem 'sqlite3'
 
 gem 'carrierwave'
@@ -11,6 +11,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'devise'
+gem 'bootstrap-sass', '~> 3.3.7'
+gem 'sass-rails', '~> 5.0'
 
 
 # Use SCSS for stylesheets
