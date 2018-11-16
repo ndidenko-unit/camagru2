@@ -13,6 +13,7 @@ gem 'turbolinks'
 gem 'devise'
 gem 'bootstrap-sass', '~> 3.3.7'
 gem 'sass-rails', '~> 5.0'
+gem 'acts_as_votable', '~> 0.12.0'
 
 
 # Use SCSS for stylesheets

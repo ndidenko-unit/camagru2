@@ -1,13 +1,27 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
-
-<p>
-  <%= image_tag @product.image %>
-</p>
+<div class="panel panel-primary">
+  <div class="panel-body">
+    <%= image_tag @product.image, class: 'img-responsive center-block' if @product.image? %>
+  </div>
+  <div class="panel-footer panel-primary">
+    <%= form_tag add_comment_product_path(@product) do %>
+      <%= text_field_tag(:comment) %>
+      <%= submit_tag('Add comment') %>
+    <% end %>
+  </div>
+  <div class="panel-footer panel-primary">
+    <p><%= link_to 'Show comments', @product %></p>
+    <%= link_to 'Edit', edit_product_path(@product) %>
+    <p><%= link_to 'Destroy', @product, method: :delete %></p>
+    <p><strong>Likes: <%= @product.votes_for.count %></strong></p>
+  </div>
+  <% @comments.each do |comment| %>
+    <div class="panel-footer">
+      <strong><%= comment.user.email %></strong>
+      <%= comment.comment_text %>
+      <%= link_to 'Destroy', delete_comment_product_path(comment_id: comment.id), :method => :delete %>
+    </div>
+  <% end %>
+</div>
 
 <%= link_to 'Edit', edit_product_path(@product) %> |
 <%= link_to 'Back', products_path %>

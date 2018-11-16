@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :add_comment, :delete_comment]
   before_filter :authenticate_user! # для Devise
 
   # GET /products
@@ -9,6 +9,7 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   def show
+    @comments = Comment.where(product_id: @product.id)
   end
 
   # GET /products/new
@@ -44,6 +45,25 @@ class ProductsController < ApplicationController
   def destroy
     @product.destroy
     redirect_to products_url, notice: 'Product was successfully destroyed.'
+  end
+
+  def add_comment
+    if Comment.create(comment_text: params[:comment], user_id: current_user.id, product_id: params[:id])
+      redirect_to @product, notice: 'Comment was successfully added.'
+    else
+      redirect_to @product, notice: 'No comment has been added.'
+    end
+  end
+
+  def delete_comment
+    # binding.pry
+    comment = Comment.find_by_id(params[:comment_id])
+    if current_user.id == comment.user.id
+      comment.destroy
+      redirect_to @product, notice: 'Comment was successfully deleted.'
+    else
+      redirect_to @product, notice: 'The comment has not been deleted.'
+    end
   end
 
   private
