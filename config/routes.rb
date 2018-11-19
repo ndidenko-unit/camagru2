@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     member do
       post :add_comment
       delete :delete_comment
+      post :like_post
     end
   end
 

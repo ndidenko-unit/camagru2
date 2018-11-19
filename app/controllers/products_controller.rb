@@ -1,15 +1,17 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy, :add_comment, :delete_comment]
+  before_action :set_product, only: [:show, :edit, :update, :destroy,
+                                     :add_comment, :delete_comment, :like_post]
   before_filter :authenticate_user! # для Devise
 
   # GET /products
   def index
-    @products = Product.all
+    @products = Product.all.paginate(:page => params[:page], :per_page => 5)
   end
 
   # GET /products/1
   def show
     @comments = Comment.where(product_id: @product.id)
+    @link_name = @product.liked?(current_user) ? 'Unlike' : 'Like'
   end
 
   # GET /products/new
@@ -63,6 +65,17 @@ class ProductsController < ApplicationController
       redirect_to @product, notice: 'Comment was successfully deleted.'
     else
       redirect_to @product, notice: 'The comment has not been deleted.'
+    end
+  end
+
+  def like_post
+    # binding.pry
+    if @product.liked? current_user
+      @product.unliked_by current_user
+      redirect_to @product, notice: 'Post was successfully unliked.'
+    else
+      @product.liked_by current_user
+      redirect_to @product, notice: 'Post was successfully liked.'
     end
   end
 

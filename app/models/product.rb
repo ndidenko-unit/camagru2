@@ -8,6 +8,10 @@ class Product < ActiveRecord::Base
 
   mount_base64_uploader :image, ProductImageUploader
 
+  def liked?(current_user)
+    self.votes_for.where(voter_id: current_user.id).size > 0
+  end
+
   private
   def image_size_validation
     errors[:image] << 'should be less than 500KB' if image.size > 0.5.megabytes
