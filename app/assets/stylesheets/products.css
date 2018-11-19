@@ -2,3 +2,24 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.scss.
 */
+
+.outerDiv
+{
+    height: 90px;
+    width: 100%;
+    margin: 0px auto;
+}
+.leftDiv
+{
+    color: #000;
+    height: 100px;
+    width: 88%;
+    float: left;
+}
+.rightDiv
+{
+    color: #000;
+    height: 100px;
+    width: 10%;
+    float: right;
+}

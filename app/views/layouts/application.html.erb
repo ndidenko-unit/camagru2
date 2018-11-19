@@ -16,7 +16,7 @@
   <div class="col-md-3">
     <% if user_signed_in? %>
       <p>Здравствуйте, <%= current_user.email %></p>
-      <p><%= link_to 'Сменить пароль', edit_user_registration_path %></p>
+      <p><%= link_to 'Управление пользователем', edit_user_registration_path %></p>
       <p><%= link_to 'Выйти', destroy_user_session_path, :method => :delete %></p>
     <% else %>
       <p><%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %></p>
@@ -24,17 +24,17 @@
   </div>
 </div>
 <div class="alert alert-warning">
-  <p><%= notice %><%= alert %></p>
+  <%= notice %><%= alert %>
 </div>
 <div class="col-md-4"></div>
-<div class="col-md-4">
+<div class="center-block" style="width: 640px; margin-top: 120px;">
   <%= yield %>
 </div>
 <div class="col-md-4"></div>
 <div class="footer">
-  <div class="col-md-11">
+  <div class="col-md-10">
   </div>
-  <div class="col-md-1">
+  <div class="col-md-2">
     <br>by ndidenko<br><br>
   </div>
 </div>

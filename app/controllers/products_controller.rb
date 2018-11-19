@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all.paginate(:page => params[:page], :per_page => 5)
+    @products = Product.all.order("updated_at").reverse_order.paginate(:page => params[:page], :per_page => 5)
   end
 
   # GET /products/1
@@ -45,11 +45,12 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1
   def destroy
-    @product.destroy
+    @product.destroy if current_user.id == @product.user.id
     redirect_to products_url, notice: 'Product was successfully destroyed.'
   end
 
   def add_comment
+    @product.update_attribute('updated_at', Time.now)
     if Comment.create(comment_text: params[:comment], user_id: current_user.id, product_id: params[:id])
       redirect_to @product, notice: 'Comment was successfully added.'
     else
@@ -70,12 +71,13 @@ class ProductsController < ApplicationController
 
   def like_post
     # binding.pry
+    @product.update_attribute('updated_at', Time.now)
     if @product.liked? current_user
       @product.unliked_by current_user
-      redirect_to @product, notice: 'Post was successfully unliked.'
+      redirect_to request.referer, notice: 'Post was successfully unliked.'
     else
       @product.liked_by current_user
-      redirect_to @product, notice: 'Post was successfully liked.'
+      redirect_to request.referer, notice: 'Post was successfully liked.'
     end
   end
 

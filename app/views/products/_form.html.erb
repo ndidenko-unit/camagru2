@@ -1,24 +1,28 @@
 <%= form_for(@product) do |f| %>
-  <div id="my_camera"></div>
+    <div class="panel panel-primary">
+      <div class="panel-body">
+       <div id="my_camera"></div>
+        <br>
+      <input type=button value="Take Snapshot" class="btn btn-primary btn-block" onClick="take_snapshot()">
+      <div class="field">
+        <%= f.label 'Загрузить файл:' %><br>
+        <%= f.file_field :file, class: 'btn btn-block' %>
+      </div>
+      <div class="field">
+        <%= hidden_field_tag 'user_id', current_user.id %>
+        <%= f.hidden_field :image %>
+        <%= f.label :image %>: <br />
+        <div id="results">Your captured image will appear here...</div>
+      </div>
+      <br>
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
 
-  <input type=button value="Take Snapshot" onClick="take_snapshot()">
-  <div class="field">
-    <%= f.label 'Загрузить файл:' %><br>
-    <%= f.file_field :file %>
-  </div>
-  <div class="field">
-    <%= hidden_field_tag 'user_id', current_user.id %>
-    <%= f.hidden_field :image %>
-    <%= f.label :image %>: <br />
-    <div id="results">Your captured image will appear here...</div>
-  </div>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <div class="actions"><br>
+        <%= f.submit 'Create post', class: 'btn btn-primary btn-block' %>
+      </div>
+    <% end %>
+    </div>
+</div>

@@ -12,8 +12,8 @@ function take_snapshot(){
 $(document).ready(function() {
     if ($("#my_camera").length) {
         Webcam.set({
-            width: 640,
-            height: 480,
+            width: 610,
+            height: 456,
             image_format: 'jpeg',
             jpeg_quality: 90
         });

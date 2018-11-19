@@ -1,17 +1,28 @@
-<h1>Listing Products</h1>
-
-    <%= link_to 'New Product', new_product_path %>
-      <% @products.each do |product| %>
-        <div class="panel panel-primary">
-          <div class="panel-body">
-            <%= image_tag product.image_url, class: 'img-responsive center-block' if product.image? %>
-          </div>
-          <div class="panel-footer panel-primary">
-            <p><%= link_to "Show comments (#{product.comments.count})", product %></p>
+<%= button_to 'New Post', new_product_path, class: 'btn btn-primary btn-block' %><br>
+<%= will_paginate @posts %>
+  <% @products.each do |product| %>
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <%= image_tag product.image_url, class: 'img-responsive center-block' if product.image? %>
+        <%= '<center><br><strong>'.html_safe + product.user.email + ':</strong> '
+            .html_safe + product.name + '</center>'.html_safe %>
+      </div>
+      <div class="outerDiv panel-footer panel-primary">
+        <div class="leftDiv">
+          <p><%= link_to "Сomments (#{product.comments.count})", product %></p>
+          <% if current_user.id == product.user.id %>
             <%= link_to 'Edit', edit_product_path(product) %>
             <%= link_to 'Destroy', product, method: :delete %>
-          </div>
+          <% end %>
         </div>
-      <% end %>
-
+        <div class="rightDiv">
+          <%= button_to like_post_product_path(product), method: :post, class: 'btn btn-default' do %>
+            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">
+              <h4><%= product.votes_for.count %></h4>
+            </span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 <%= will_paginate @posts %>

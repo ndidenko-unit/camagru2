@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       post :add_comment
       delete :delete_comment
       post :like_post
+      post :new
     end
   end
 
