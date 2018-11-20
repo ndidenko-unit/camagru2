@@ -1,0 +1,7 @@
+<div class="btn-group btn-group-justified" role="group">
+  <div class="btn-group" role="group"><%= button_to 'New Post', new_product_path, class: 'btn btn-default' %></div>
+  <div class="btn-group" role="group"><%= button_to 'All Posts', root_path, method: :get,
+                                                    class: 'btn btn-default' %></div>
+  <div class="btn-group" role="group"><%= button_to 'Only my Posts', root_path, method: :get,
+                                                    params: { only_my: 1 }, class: 'btn btn-default' %></div>
+</div><br>

@@ -20,15 +20,85 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  margin-top: 100px;
 }
+
 .footer {
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   /* Set the fixed height of the footer here */
+   height: 60px;
+   background-color: #f5f5f5;
+ }
+
+.header {
+   position: absolute;
+   top: 0;
+   padding-top: 10px;
+   padding-left: 40px;
+   width: 100%;
+   height: auto;
+   min-height: 100px;
+ }
+.container {
   position: absolute;
+  left: 15%;
+  width: auto;
+  padding: 10px;
+}
+
+.message-orange {
+  position: relative;
+  margin-bottom: 10px;
+  margin-left: calc(100% - 240px);
+  padding: 10px;
+  background-color: #f8e896;
+  width: auto;
+  height: 50px;
+  text-align: left;
+  font: 400 .9em 'Open Sans', sans-serif;
+  border: 1px solid #dfd087;
+  border-radius: 10px;
+}
+
+.message-orange:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-bottom: 15px solid #f8e896;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
   bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
+  right: -15px;
+}
+
+.message-orange:before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-bottom: 17px solid #dfd087;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  bottom: -1px;
+  right: -17px;
+}
+
+.message-content {
+  padding: 0;
+  margin: 0;
+}
+
+.message-timestamp-right {
+  position: absolute;
+  font-size: .85em;
+  font-weight: 300;
+  bottom: 5px;
+  right: 10px;
 }

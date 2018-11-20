@@ -1,6 +1,7 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.scss.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
 .login-form {
   width: 340px;
   margin: 50px auto;
@@ -21,4 +22,11 @@
 .btn {
   font-size: 15px;
   font-weight: bold;
+}
+.grandParentContainer{
+  display:table; height:100%; margin: 0 auto;
+}
+
+.parentContainer{
+  display:table-cell; vertical-align: bottom;
 }

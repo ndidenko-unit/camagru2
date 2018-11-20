@@ -1,11 +1,15 @@
 class ProductsController < ApplicationController
+
   before_action :set_product, only: [:show, :edit, :update, :destroy,
                                      :add_comment, :delete_comment, :like_post]
-  before_filter :authenticate_user! # для Devise
+  before_filter :authenticate_user! # Devise
 
   # GET /products
   def index
-    @products = Product.all.order("updated_at").reverse_order.paginate(:page => params[:page], :per_page => 5)
+    @products = Product.all.order_and_paginate(:page => params[:page], :per_page => 5)
+    @products = current_user.products.
+        order_and_paginate(:page => params[:page], :per_page => 5) if params[:only_my] == "1"
+    # binding.pry
   end
 
   # GET /products/1
@@ -36,6 +40,7 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
+    # binding.pry
     if @product.update(product_params)
       redirect_to @product, notice: 'Product was successfully updated.'
     else
@@ -82,14 +87,31 @@ class ProductsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def product_params
       params[:product][:image] = params[:product][:file] if params[:product][:file].present?
+      params[:product][:image] = File.open(add_frame(params)) if params[:frame_name].present? && params[:id].present?
       params.require(:product).permit(:name, :image).merge(user_id: current_user.id)
+    end
+
+    def add_frame(params)
+      img_orig = "#{Rails.root}/public/uploads/product/image/#{params[:id]}/image.jpeg"
+      img_copy = "#{Rails.root}/public/uploads/product/image/#{params[:id]}/imagecopy.jpeg"
+      if File.exist?(img_orig)
+        FileUtils.cp(img_orig, img_copy)
+      else
+        FileUtils.cp(img_copy, img_orig)
+      end
+      first_image = MiniMagick::Image.open "#{Rails.root}/public/uploads/product/image/#{params[:id]}/image.jpeg"
+      second_image = MiniMagick::Image.open "#{Rails.root}/public/frames/#{params[:frame_name]}.png"
+      result = first_image.composite(second_image) do |c|
+        c.compose "Over"
+        c.geometry "+20+20"
+      end
+      result.write "#{Rails.root}/public/uploads/product/image/#{params[:id]}/#{params[:frame_name]}.jpeg"
+      "#{Rails.root}/public/uploads/product/image/#{params[:id]}/#{params[:frame_name]}.jpeg"
     end
 end

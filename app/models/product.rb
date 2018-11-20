@@ -3,6 +3,8 @@ class Product < ActiveRecord::Base
   validates_presence_of :image
   validate :image_size_validation
 
+  scope :order_and_paginate, ->(parameters) { order("updated_at").reverse_order.paginate(parameters) }
+
   belongs_to :user
   has_many :comments
 

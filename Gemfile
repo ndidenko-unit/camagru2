@@ -6,6 +6,7 @@ gem 'sqlite3'
 gem 'carrierwave'
 gem 'carrierwave-base64'
 gem 'rmagick'
+gem 'mini_magick'
 
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'

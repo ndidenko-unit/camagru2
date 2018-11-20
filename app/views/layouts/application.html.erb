@@ -9,7 +9,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class="col-md-12 alert alert-info">
+<div class="header alert-info">
   <div class="col-md-9">
     <h1><%= link_to 'Camagru', root_path %></h1>
   </div>
@@ -23,11 +23,18 @@
     <% end %>
   </div>
 </div>
-<div class="alert alert-warning">
-  <%= notice %><%= alert %>
+<div class="col-md-4">
+  <% if notice.present? || alert.present? %>
+      <div class="container">
+        <div class="message-orange">
+          <p class="message-content"><%= notice %><%= alert %></p>
+          <div class="message-timestamp-right"><%= Time.now.strftime('%a, %d %b %Y %H:%M:%S') %></div>
+        </div>
+      </div>
+  <% end %>
 </div>
-<div class="col-md-4"></div>
 <div class="center-block" style="width: 640px; margin-top: 120px;">
+  <%= render "products/button_group" if user_signed_in? %>
   <%= yield %>
 </div>
 <div class="col-md-4"></div>

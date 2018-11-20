@@ -16,6 +16,13 @@
       </div>
       <br>
       <div class="field">
+        <% if current_page?(action: 'edit') %>
+            <strong>Add effect to photo: </strong><br>
+          <%= radio_button_tag :frame_name, 'happy' %> Happy<br>
+          <%= radio_button_tag :frame_name, 'cake' %> Cake<br>
+          <%= radio_button_tag :frame_name, 'rocket' %> Rocket<br>
+          <br>
+        <% end %>
         <%= f.label :name %><br>
         <%= f.text_field :name, class: 'form-control' %>
       </div>
