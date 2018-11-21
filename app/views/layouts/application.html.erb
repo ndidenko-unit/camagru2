@@ -15,11 +15,11 @@
   </div>
   <div class="col-md-3">
     <% if user_signed_in? %>
-      <p>Здравствуйте, <%= current_user.email %></p>
-      <p><%= link_to 'Управление пользователем', edit_user_registration_path %></p>
-      <p><%= link_to 'Выйти', destroy_user_session_path, :method => :delete %></p>
+      <p>Welcome, <%= current_user.email %></p>
+      <p><%= link_to 'User settings', edit_user_registration_path %></p>
+      <p><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></p>
     <% else %>
-      <p><%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %></p>
+      <p><%= link_to 'Login', new_user_session_path %> или <%= link_to 'Sign up', new_user_registration_path %></p>
     <% end %>
   </div>
 </div>
