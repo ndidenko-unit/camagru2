@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       delete :delete_comment
       post :like_post
       post :new
+      get :add_effects
     end
   end
 

@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 
-  before_action :set_product, only: [:show, :edit, :update, :destroy,
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :add_effects,
                                      :add_comment, :delete_comment, :like_post]
   before_filter :authenticate_user! # Devise
 
@@ -9,7 +9,6 @@ class ProductsController < ApplicationController
     @products = Product.all.order_and_paginate(:page => params[:page], :per_page => 5)
     @products = current_user.products.
         order_and_paginate(:page => params[:page], :per_page => 5) if params[:only_my] == "1"
-    # binding.pry
   end
 
   # GET /products/1
@@ -40,7 +39,6 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
-    # binding.pry
     if @product.update(product_params)
       redirect_to @product, notice: 'Product was successfully updated.'
     else
@@ -64,7 +62,6 @@ class ProductsController < ApplicationController
   end
 
   def delete_comment
-    # binding.pry
     comment = Comment.find_by_id(params[:comment_id])
     if current_user.id == comment.user.id
       comment.destroy
@@ -75,15 +72,18 @@ class ProductsController < ApplicationController
   end
 
   def like_post
-    # binding.pry
     @product.update_attribute('updated_at', Time.now)
     if @product.liked? current_user
       @product.unliked_by current_user
-      redirect_to request.referer, notice: 'Post was successfully unliked.'
+      redirect_to request.referer, notice: 'Post was disliked.'
     else
       @product.liked_by current_user
       redirect_to request.referer, notice: 'Post was successfully liked.'
     end
+  end
+
+  def add_effects
+
   end
 
   private
@@ -93,11 +93,11 @@ class ProductsController < ApplicationController
 
     def product_params
       params[:product][:image] = params[:product][:file] if params[:product][:file].present?
-      params[:product][:image] = File.open(add_frame(params)) if params[:frame_name].present? && params[:id].present?
+      params[:product][:image] = File.open(composite_img(params)) if params[:frame_name].present? && params[:id].present?
       params.require(:product).permit(:name, :image).merge(user_id: current_user.id)
     end
 
-    def add_frame(params)
+    def composite_img(params)
       img_orig = "#{Rails.root}/public/uploads/product/image/#{params[:id]}/image.jpeg"
       img_copy = "#{Rails.root}/public/uploads/product/image/#{params[:id]}/imagecopy.jpeg"
       if File.exist?(img_orig)
@@ -105,6 +105,7 @@ class ProductsController < ApplicationController
       else
         FileUtils.cp(img_copy, img_orig)
       end
+      return img_orig if params[:frame_name] == 'original'
       first_image = MiniMagick::Image.open "#{Rails.root}/public/uploads/product/image/#{params[:id]}/image.jpeg"
       second_image = MiniMagick::Image.open "#{Rails.root}/public/frames/#{params[:frame_name]}.png"
       result = first_image.composite(second_image) do |c|

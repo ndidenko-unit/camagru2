@@ -8,8 +8,9 @@
   <div class="outerDiv panel-footer panel-primary">
     <div class="leftDiv">
       <% if current_user.id == @product.user.id %>
-        <%= link_to 'Edit post', edit_product_path(@product) %>
-        <p><%= link_to 'Destroy post', @product, method: :delete %></p>
+        <%= link_to 'Edit post', edit_product_path(@product) %><br>
+        <%= link_to 'Add effects to photo', add_effects_product_path(@product) %><br>
+        <%= link_to 'Destroy post', @product, method: :delete %>
       <% end %>
     </div>
     <div class="rightDiv">
